@@ -83,22 +83,6 @@ docker exec -it jesse-nginx-service /bin/bash
 docker compose ps
 ```
 
-### 手动构建镜像（可选）
-
-如需自定义构建镜像：
-
-```bash
-# 下载依赖包
-cd build/nacos/packages && sh download.sh
-cd build/mysql/packages && sh download.sh
-
-# 使用构建配置
-cp docker-compose-build.yml docker-compose.yml
-
-# 构建并启动
-docker compose up -d --build
-```
-
 ---
 
 ## 📊 服务组件
@@ -231,16 +215,6 @@ elasticsearch-setup-passwords interactive
 
 ```
 docker-lnmp/
-├── build/                  # Docker 镜像构建文件
-│   ├── nginx/             # Nginx 构建配置
-│   ├── mysql/             # MySQL 构建配置
-│   ├── php*/              # 各版本 PHP 构建配置
-│   ├── redis/             # Redis 构建配置
-│   ├── mongodb/           # MongoDB 构建配置
-│   ├── rabbitmq/          # RabbitMQ 构建配置
-│   ├── elasticsearch/     # Elasticsearch 构建配置
-│   ├── kibana/            # Kibana 构建配置
-│   └── nacos/             # Nacos 构建配置
 ├── conf/                   # 服务配置文件
 │   ├── nginx/             # Nginx 配置
 │   ├── mysql/             # MySQL 配置
@@ -350,12 +324,11 @@ chmod -R 777 store/ log/
 
 ### 3. PHP 扩展缺失
 
-如需添加 PHP 扩展，修改对应版本的 Dockerfile 并重新构建：
+⚠️ **注意**：本项目不提供源码构建功能。如需添加 PHP 扩展或自定义镜像，请联系作者获取技术支持。
 
-```bash
-docker compose build php8.1
-docker compose up -d php8.1
-```
+**联系方式**：
+- Gitee: https://gitee.com/jessedev
+- Email: jessdev@163.com
 
 ### 4. 清理数据
 

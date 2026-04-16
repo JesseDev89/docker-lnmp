@@ -83,22 +83,6 @@ docker exec -it jesse-nginx-service /bin/bash
 docker compose ps
 ```
 
-### Manual Image Build (Optional)
-
-To customize image builds:
-
-```bash
-# Download dependencies
-cd build/nacos/packages && sh download.sh
-cd build/mysql/packages && sh download.sh
-
-# Use build configuration
-cp docker-compose-build.yml docker-compose.yml
-
-# Build and start
-docker compose up -d --build
-```
-
 ---
 
 ## 📊 Service Components
@@ -231,16 +215,6 @@ Supported versions (enable as needed in `docker-compose.yml`):
 
 ```
 docker-lnmp/
-├── build/                  # Docker image build files
-│   ├── nginx/             # Nginx build configuration
-│   ├── mysql/             # MySQL build configuration
-│   ├── php*/              # PHP version build configurations
-│   ├── redis/             # Redis build configuration
-│   ├── mongodb/           # MongoDB build configuration
-│   ├── rabbitmq/          # RabbitMQ build configuration
-│   ├── elasticsearch/     # Elasticsearch build configuration
-│   ├── kibana/            # Kibana build configuration
-│   └── nacos/             # Nacos build configuration
 ├── conf/                   # Service configuration files
 │   ├── nginx/             # Nginx configuration
 │   ├── mysql/             # MySQL configuration
@@ -350,12 +324,11 @@ chmod -R 777 store/ log/
 
 ### 3. Missing PHP Extensions
 
-To add PHP extensions, modify the corresponding version's Dockerfile and rebuild:
+⚠️ **Note**: This project does not provide source code building functionality. If you need to add PHP extensions or customize images, please contact the author for technical support.
 
-```bash
-docker compose build php8.1
-docker compose up -d php8.1
-```
+**Contact**:
+- Gitee: https://gitee.com/jessedev
+- Email: jessdev@163.com
 
 ### 4. Clean Data
 

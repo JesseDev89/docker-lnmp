@@ -1,0 +1,245 @@
+services:
+  php7.4:
+    image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/php:7.4
+    environment:
+      TZ: Asia/Shanghai
+    container_name: jesse-php7.4-service
+    restart: always
+    volumes:
+      - ${WEB_ROOT_PATH}:/www
+      - ${CONF_PATH}/php7.4/conf.d/php.ini:/usr/local/app/php7.4/etc/conf.d/php.ini
+      - ${CONF_PATH}/php7.4/php-fpm.d/:/usr/local/app/php7.4/etc/php-fpm.d
+      - ${LOG_PATH}/php7.4/:/var/log/
+    working_dir: /www
+  mysql:
+    image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/mysql:8.0
+    container_name: jesse-mysql8.0-service
+    platform: linux/amd64
+    privileged: true
+    restart: always
+    volumes:
+      - ${CONF_PATH}/mysql/my.cnf/:/usr/local/app/mysql/etc/my.cnf
+      - ${STORE_PATH}/mysql/data:/usr/local/app/mysql/data
+      - ${LOG_PATH}/mysql:/var/log/mysql
+    ports:
+      - ${MYSQL8_PORT}:3306
+  mysql5.7:
+    image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/mysql:5.7
+    container_name: jesse-mysql5.7-service
+    privileged: true
+    restart: always
+    volumes:
+      - ${CONF_PATH}/mysql5.7/my.cnf/:/etc/mysql/my.cnf
+      - ${STORE_PATH}/mysql5.7/data:/usr/local/app/mysql/data
+      - ${LOG_PATH}/mysql5.7:/var/log/mysql
+    ports:
+      - ${MYSQL_PORT}:3306
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+  redis:
+    image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/redis:6.2.9
+    container_name: jesse-redis6.2.5-service
+    privileged: true
+    restart: always
+    volumes:
+      - ${CONF_PATH}/redis/redis.conf:/usr/local/app/redis/conf/redis.conf
+      - ${LOG_PATH}/redis/:/usr/local/app/redis/logs
+      - ${STORE_PATH}/redis/:/usr/local/app/redis/data
+    ports:
+      - ${REDIS_PORT}:6379
+  nginx:
+    image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/nginx:1.2.1
+    container_name: jesse-nginx-service
+    privileged: true
+    restart: always
+    volumes:
+      - ${CONF_PATH}/nginx/conf/nginx.conf:/usr/local/app/nginx/conf/nginx.conf
+      - ${CONF_PATH}/nginx/conf/conf.d:/usr/local/app/nginx/conf/conf.d
+      - ${LOG_PATH}/nginx/log:/usr/local/app/nginx/logs
+      - ${WEB_ROOT_PATH}:/www
+    ports:
+      - ${NGINX_PORT}:80
+  php8.0:
+    image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/php:8.0
+    environment:
+      TZ: Asia/Shanghai
+    container_name: jesse-php8.0-service
+    restart: always
+    volumes:
+      - ${WEB_ROOT_PATH}:/www
+      - ${CONF_PATH}/php8.0/conf.d/php.ini:/usr/local/app/php8.0/etc/conf.d/php.ini
+      - ${CONF_PATH}/php8.0/php-fpm.d/:/usr/local/app/php8.0/etc/php-fpm.d
+      - ${LOG_PATH}/php8.0/:/var/log/
+    working_dir: /www
+  nacos2.2.3:
+    image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/nacos:2.2.3
+    container_name: jesse-nacos2.2.3-standalone
+    restart: on-failure
+    environment:
+      - NACOS_AUTH_IDENTITY_KEY=N78hhSHC73PM
+      - NACOS_AUTH_IDENTITY_VALUE=GA9CKifJzdb3
+      - NACOS_AUTH_TOKEN=SecretKey012345678901234567890193456789012345678901234567890123456729
+      - PREFER_HOST_MODE=hostname
+      - MODE=standalone
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - MYSQL_SERVICE_HOST=mysql5.7
+      - MYSQL_SERVICE_DB_NAME=nacos2.2.3
+      - MYSQL_SERVICE_PORT=3306
+      - MYSQL_SERVICE_USER=root
+      - MYSQL_SERVICE_PASSWORD=a123456
+      - MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false
+    volumes:
+      - ${LOG_PATH}/nacos2.2.3/:/home/nacos/logs
+      - ${CONF_PATH}/nacos2.2.3/custom.properties:/home/nacos/init.d/custom.properties
+    ports:
+      - ${NACOS_PORT}:8848
+    #        - "9848:9848"
+    #        - "9555:9555"
+    depends_on:
+      - mysql5.7
+  mongodb:
+    image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/mongodb:4.4.22
+    container_name: jesse-mongodb-service
+    privileged: true
+    restart: always
+    volumes:
+      - ${STORE_PATH}/mongodb/data/:/usr/local/app/mongodb/data/
+      - ${LOG_PATH}/mongodb/:/var/log/mongodb/
+      - ${CONF_PATH}/mongodb/mongod.conf:/etc/mongod.conf
+    ports:
+      - ${MONGODB_PORT}:27017
+  rabbitmq:
+    image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/rabbitmq:4.2.5
+    container_name: jesse-rabbitmq-service
+    privileged: true
+    restart: always
+    volumes:
+      - ${STORE_PATH}/rabbitmq/data/:/usr/local/app/rabbitmq/data
+      - ${LOG_PATH}/rabbitmq/:/usr/local/app/rabbitmq/log
+      - ${CONF_PATH}/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+    ports:
+      - ${RABBITMQ_PORT}:5672
+      - ${RABBITMQ_UI_PORT}:15672
+  elasticsearch:
+    image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/elasticsearch:7.14.2
+    container_name: jesse-elasticsearch-service
+    privileged: true
+    restart: always
+    volumes:
+      - ${STORE_PATH}/elasticsearch/data/:/usr/local/app/elasticsearch/data
+      - ${LOG_PATH}/elasticsearch/:/usr/local/app/elasticsearch/logs
+      - ${CONF_PATH}/elasticsearch/elasticsearch.yml:/usr/local/app/elasticsearch/config/elasticsearch.yml
+      - ${CONF_PATH}/elasticsearch/jvm.options.d:/usr/local/app/elasticsearch/config/jvm.options.d
+    ports:
+      - ${ELASTICSEARCH_PORT}:9200
+    #      - 9300:9300
+    networks:
+      jesse-network:
+        ipv4_address: 171.0.1.10
+  kibana:
+    image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/kibana:7.14.2
+    container_name: jesse-kibana-service
+    privileged: true
+    restart: always
+    volumes:
+      - ${STORE_PATH}/kibana/data/:/usr/local/app/kibana/data
+      - ${LOG_PATH}/kibana/:/usr/local/app/kibana/logs
+      - ${CONF_PATH}/kibana/kibana.yml:/usr/local/app/kibana/config/kibana.yml
+    ports:
+      - ${KIBANA_PORT}:5601
+  jesse-mirco:
+    image: hyperf/hyperf:8.3-alpine-v3.19-swoole
+    container_name: jesse-mirco
+    privileged: true
+    tty: true
+    stdin_open: true
+    restart: always
+    volumes:
+      - ${WEB_ROOT_PATH}:/www
+    working_dir: /www
+    entrypoint: /bin/bash
+    ports:
+      - 9501:9501
+  jesse-zipkin:
+    image: openzipkin/zipkin:2.22
+    container_name: jesse-zipkin-service
+    privileged: true
+    restart: always
+    ports:
+      - "9411:9411"
+  php8.0-swoole:
+    image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/php:php8.0-swoole
+    environment:
+      TZ: Asia/Shanghai
+    container_name: jesse-php8.0-swoole-service
+    restart: always
+    volumes:
+      - ${WEB_ROOT_PATH}:/www
+      - ${CONF_PATH}/php8.0-swoole/conf.d/php.ini:/usr/local/app/php8.0/etc/conf.d/php.ini
+      - ${LOG_PATH}/php8.0-swoole/:/var/log/
+    working_dir: /www
+  php8.1:
+    image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/php:8.1
+    environment:
+      TZ: Asia/Shanghai
+    container_name: jesse-php8.1-service
+    restart: always
+    volumes:
+      - ${WEB_ROOT_PATH}:/www
+      - ${CONF_PATH}/php8.1/conf.d/php.ini:/usr/local/app/php8.1/etc/conf.d/php.ini
+      - ${CONF_PATH}/php8.1/php-fpm.d/:/usr/local/app/php8.0/etc/php-fpm.d
+      - ${LOG_PATH}/php8.1/:/var/log/
+    working_dir: /www
+  php8.2:
+    image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/php:8.2
+    environment:
+      TZ: Asia/Shanghai
+    container_name: jesse-php8.2-service
+    restart: always
+    volumes:
+      - ${WEB_ROOT_PATH}:/www
+      - ${CONF_PATH}/php8.2/conf.d/php.ini:/usr/local/app/php8.2/etc/conf.d/php.ini
+      - ${CONF_PATH}/php8.2/php-fpm.d/:/usr/local/app/php8.0/etc/php-fpm.d
+      - ${LOG_PATH}/php8.2/:/var/log/
+    working_dir: /www
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: jesse-portainer-service
+    restart: always
+    ports:
+      - "9000:9000"
+      - "8000:8000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${STORE_PATH}/portainer/data/:/data
+  logstash:
+    image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/logstash:7.14.2
+    container_name: jesse-logstash-service
+    restart: always
+    #command: /bin/sh  # 临时添加这行，覆盖 CMD
+    environment:
+      - ES_HOST=171.0.1.10
+      - ES_PORT=9200
+      - ES_USER=elastic
+      - ES_PASSWORD=a123456
+    volumes:
+      - ${CONF_PATH}/logstash/config:/usr/local/app/logstash/config/
+      - ${CONF_PATH}/logstash/pipeline:/usr/local/app/logstash/pipeline
+      - ${LOG_PATH}/logstash/:/usr/local/app/logstash/log
+      - ${STORE_PATH}/logstash/:/usr/local/app/logstash/data
+    ports:
+      - ${LOGSTASH_PORT}:5044
+      - ${LOGSTASH_UI_PORT}:9600
+    depends_on:
+      - elasticsearch
+# 创建网关
+networks:
+  jesse-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 171.0.1.0/24
+          gateway: 171.0.1.1

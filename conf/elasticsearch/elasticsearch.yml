@@ -1,0 +1,51 @@
+cluster.name: "docker-cluster"
+network.host: 0.0.0.0
+#discovery.seed_hosts: ["0.0.0.0"]
+
+#cluster.initial_master_nodes: ["node-1", "node-2"]
+# 节点名称
+node.name: node-1
+# 是不是有资格竞选主节点
+node.master: true
+cluster.initial_master_nodes: ["node-1"]
+
+# 设置跨域
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+
+# 指定目录
+path.data: /usr/local/app/elasticsearch/data
+path.logs: /usr/local/app/elasticsearch/logs
+
+# 禁用系统调用过滤器（Docker环境）
+bootstrap.system_call_filter: false
+
+#----------------------- BEGIN SECURITY AUTO CONFIGURATION -----------------------
+#
+# The following settings, TLS certificates, and keys have been automatically
+# generated to configure Elasticsearch security features on 24-09-2022 19:37:49
+#
+# --------------------------------------------------------------------------------
+
+# Enable security features
+#xpack.security.enabled: false
+#
+#xpack.security.enrollment.enabled: false
+#
+#
+## Enable encryption for HTTP API client connections, such as Kibana, Logstash, and Agents
+#xpack.security.http.ssl:
+#  enabled: false
+#  keystore.path: certs/http.p12
+#
+## Enable encryption and mutual authentication between cluster nodes
+xpack.security.enabled: true
+#xpack.license.self_generated.type: basic
+xpack.security.transport.ssl:
+  enabled: true
+  verification_mode: certificate
+  # 默认在config目录下
+  keystore.path: elastic-certificates.p12
+  truststore.path: elastic-certificates.p12
+
+##----------------------- END SECURITY AUTO CONFIGURATION -------------------------

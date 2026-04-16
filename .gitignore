@@ -1,0 +1,32 @@
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+
+# Docker Compose (use example file)
+docker-compose.yml
+
+# Runtime Data
+store/*
+!store/.gitignore
+log/*
+!log/.gitignore
+
+# Build artifacts
+*.tar.gz
+*.zip
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# www directory - keep only demo and gitignore
+www/*
+!www/.gitignore
+!www/demo/
+!www/README.md

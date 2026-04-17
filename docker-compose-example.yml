@@ -346,6 +346,7 @@ services:
     restart: always
     volumes:
       - ${CONF_PATH}/filebeat/filebeat.yml:/usr/local/app/filebeat/filebeat.yml
+      - ${WEB_ROOT_PATH}:/www
     networks:
       - jesse-network
     depends_on:

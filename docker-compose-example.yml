@@ -340,6 +340,17 @@ services:
     networks:
       - jesse-network
 
+  filebeat:
+    image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/filebeat:7.14.2
+    container_name: jesse-filebeat-service
+    restart: always
+    volumes:
+      - ${CONF_PATH}/filebeat/filebeat.yml:/usr/local/app/filebeat/filebeat.yml
+      - ${LOG_PATH}:/var/log
+    networks:
+      - jesse-network
+    depends_on:
+      - logstash
 # Networks
 networks:
   jesse-network:

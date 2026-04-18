@@ -39,7 +39,8 @@ bootstrap.system_call_filter: false
 #  keystore.path: certs/http.p12
 #
 ## Enable encryption and mutual authentication between cluster nodes
-xpack.security.enabled: true
+# 禁用机器学习功能（Alpine环境不支持）
+xpack.ml.enabled: false
 #xpack.license.self_generated.type: basic
 xpack.security.transport.ssl:
   enabled: true

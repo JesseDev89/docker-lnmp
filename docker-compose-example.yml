@@ -185,14 +185,14 @@ services:
       start_period: 60s
 
   mongodb:
-    image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/mongodb:4.4.22
+    image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/mongodb:8.2.7
     container_name: jesse-mongodb-service
     restart: always
     command: mongod --config /etc/mongod.conf
     volumes:
       - ${STORE_PATH}/mongodb/data/:/usr/local/app/mongodb/data/
-      - ${LOG_PATH}/mongodb/:/var/log/mongodb/
-      - ${CONF_PATH}/mongodb/mongod.conf:/etc/mongod.conf
+      - ${LOG_PATH}/mongodb/:/usr/local/app/mongodb/log
+      - ${CONF_PATH}/mongodb/mongod.conf:/usr/local/app/mongodb/conf/mongod.conf
     ports:
       - ${MONGODB_PORT}:27017
     networks:

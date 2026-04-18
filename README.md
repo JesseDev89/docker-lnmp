@@ -126,7 +126,7 @@ FLUSH PRIVILEGES;
 
 ```bash
 # 进入 MongoDB Shell
-docker exec -it jesse-mongodb-service mongo admin
+docker exec -it jesse-mongodb-service mongosh admin
 
 # 创建用户
 db.createUser({ 

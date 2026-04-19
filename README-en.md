@@ -194,6 +194,28 @@ elasticsearch-setup-passwords interactive
 - **Configuration**: `conf/nacos/custom.properties`
 - **Log Directory**: `log/nacos/`
 
+**Initialize Database:**
+
+⚠️ **Important**: You must initialize the database before using Nacos.
+
+```bash
+# 1. Enter MySQL container
+docker exec -it jesse-mysql8.0-service mysql -uroot -p
+
+# 2. Create database
+CREATE DATABASE IF NOT EXISTS `nacos2.2.3` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+# 3. Exit MySQL
+exit;
+
+# 4. Import SQL script
+docker exec -i jesse-mysql8.0-service mysql -uroot -p nacos2.2.3 < init/nacos/mysql/mysql-schema.sql
+# Enter password and wait for import to complete
+
+# 5. Verify tables
+docker exec -it jesse-mysql8.0-service mysql -uroot -p nacos2.2.3 -e "SHOW TABLES;"
+```
+
 ### PHP Runtime
 
 Supported versions (enable as needed in `docker-compose.yml`):

@@ -210,6 +210,7 @@ exit;
 
 # 4. 导入 SQL 脚本
 docker exec -i jesse-mysql8.0-service mysql -uroot -p nacos2.2.3 < init/nacos/mysql/mysql-schema.sql
+docker exec -i jesse-mysql8.0-service mysql -uroot -p nacos2.2.3 < init/nacos/mysql/1.4.0-ipv6_support-update.sql
 # 输入密码后等待导入完成
 
 # 5. 验证数据表

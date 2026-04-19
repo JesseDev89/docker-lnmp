@@ -210,6 +210,7 @@ exit;
 
 # 4. Import SQL script
 docker exec -i jesse-mysql8.0-service mysql -uroot -p nacos2.2.3 < init/nacos/mysql/mysql-schema.sql
+docker exec -i jesse-mysql8.0-service mysql -uroot -p nacos2.2.3 < init/nacos/mysql/1.4.0-ipv6_support-update.sql
 # Enter password and wait for import to complete
 
 # 5. Verify tables

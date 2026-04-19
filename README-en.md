@@ -351,7 +351,7 @@ chmod -R 777 store/ log/
 
 **Contact**:
 - Gitee: https://gitee.com/jessedev
-- Email: jessdev@163.com
+- Email: jessedev@163.com
 
 ### 4. Clean Data
 

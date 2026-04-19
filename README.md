@@ -351,7 +351,7 @@ chmod -R 777 store/ log/
 
 **联系方式**：
 - Gitee: https://gitee.com/jessedev
-- Email: jessdev@163.com
+- Email: jessedev@163.com
 
 ### 4. 清理数据
 

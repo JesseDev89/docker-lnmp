@@ -270,7 +270,7 @@ services:
       - jesse-network
 
   # Service Discovery
-  nacos2.2.3:
+  nacos:
     image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/nacos-server:2.2.3
     container_name: jesse-nacos2.2.3-standalone
     restart: on-failure
@@ -288,8 +288,8 @@ services:
       - MYSQL_SERVICE_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false
     volumes:
-      - ${LOG_PATH}/nacos2.2.3/:/home/nacos/logs
-      - ${CONF_PATH}/nacos2.2.3/custom.properties:/home/nacos/init.d/custom.properties
+      - ${LOG_PATH}/nacos2.2.3/:/usr/local/app/nacos-server/logs
+      - ${CONF_PATH}/nacos2.2.3/custom.properties:/usr/local/app/nacos-server/init.d/custom.properties:ro
     ports:
       - ${NACOS_PORT}:8848
     depends_on:

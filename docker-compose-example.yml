@@ -188,7 +188,6 @@ services:
     image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/mongodb:8.2.7
     container_name: jesse-mongodb-service
     restart: always
-    command: mongod --config /etc/mongod.conf
     volumes:
       - ${STORE_PATH}/mongodb/data/:/usr/local/app/mongodb/data/
       - ${LOG_PATH}/mongodb/:/usr/local/app/mongodb/log

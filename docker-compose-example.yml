@@ -271,7 +271,7 @@ services:
 
   # Service Discovery
   nacos2.2.3:
-    image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/nacos:2.2.3
+    image: registry.cn-guangzhou.aliyuncs.com/jesse-dnmp/nacos-server:2.2.3
     container_name: jesse-nacos2.2.3-standalone
     restart: on-failure
     environment:

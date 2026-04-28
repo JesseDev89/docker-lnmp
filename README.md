@@ -400,7 +400,7 @@ rm -rf store/* log/*
 ### 📮 联系方式
 
 - **Gitee**: [https://gitee.com/jessedev](https://gitee.com/jessedev)
-- **Email**: jessdev@163.com
+- **Email**: jessedev@163.com
 
 ### ⚡ 响应说明
 

@@ -101,7 +101,7 @@ docker compose ps
 #### MySQL 8.0
 - **端口**: 3306
 - **默认用户**: root (无密码)
-- **数据存储**: `store/mysql/data/`
+- **数据存储**: `storage/mysql/data/`
 - **配置文件**: `conf/mysql/my.cnf`
 
 **修改 root 密码：**
@@ -119,7 +119,7 @@ FLUSH PRIVILEGES;
 
 #### MongoDB
 - **端口**: 27017
-- **数据存储**: `store/mongodb/data/`
+- **数据存储**: `storage/mongodb/data/`
 - **配置文件**: `conf/mongodb/mongod.conf`
 
 **创建管理员账号：**
@@ -144,7 +144,7 @@ db.auth("root", "a123456");
 
 #### Redis
 - **端口**: 6379
-- **数据存储**: `store/redis/`
+- **数据存储**: `storage/redis/`
 - **配置文件**: `conf/redis/redis.conf`
 
 ### 消息队列
@@ -153,7 +153,7 @@ db.auth("root", "a123456");
 - **管理界面**: http://localhost:15672
 - **AMQP 端口**: 5672
 - **默认账号**: guest / guest
-- **数据存储**: `store/rabbitmq/data/`
+- **数据存储**: `storage/rabbitmq/data/`
 
 **创建管理员用户：**
 
@@ -167,7 +167,7 @@ docker exec -it jesse-rabbitmq-service rabbitmqctl set_user_tags admin administr
 
 #### Elasticsearch
 - **端口**: 9200
-- **数据存储**: `store/elasticsearch/data/`
+- **数据存储**: `storage/elasticsearch/data/`
 - **配置文件**: `conf/elasticsearch/elasticsearch.yml`
 - **日志目录**: `log/elasticsearch/`
 
@@ -247,7 +247,7 @@ docker-lnmp/
 │   ├── project1/          # 项目 1
 │   ├── project2/          # 项目 2
 │   └── test.php           # 测试文件
-├── store/                  # 数据持久化目录
+├── storage/                  # 数据持久化目录
 │   ├── mysql/             # MySQL 数据
 │   ├── mongodb/           # MongoDB 数据
 │   ├── redis/             # Redis 数据
@@ -342,7 +342,7 @@ MYSQL_PORT=3307
 确保数据目录有正确的权限：
 
 ```bash
-chmod -R 777 store/ log/
+chmod -R 777 storage/ log/
 ```
 
 ### 3. PHP 扩展缺失
@@ -359,7 +359,7 @@ chmod -R 777 store/ log/
 
 ```bash
 docker compose down -v
-rm -rf store/* log/*
+rm -rf storage/* log/*
 ```
 
 ---
@@ -369,7 +369,7 @@ rm -rf store/* log/*
 1. **代码存放**：将所有项目代码放在 `www/` 目录下
 2. **域名配置**：在 `/etc/hosts` 中添加本地域名映射
 3. **SSL 证书**：将证书文件放在 `conf/nginx/ssl/` 目录
-4. **备份数据**：定期备份 `store/` 目录中的重要数据
+4. **备份数据**：定期备份 `storage/` 目录中的重要数据
 5. **日志监控**：使用 `docker compose logs -f` 实时查看日志
 
 ---

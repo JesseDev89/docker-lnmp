@@ -85,7 +85,7 @@ services:
       TZ: Asia/Shanghai
     volumes:
       - ${CONF_PATH}/mysql/my.cnf:/usr/local/app/mysql/etc/my.cnf
-      - ${STORAGE_PATH_PATH}/mysql/data:/usr/local/app/mysql/data
+      - ${STORAGE_PATH}/mysql/data:/usr/local/app/mysql/data
       - ${LOG_PATH}/mysql:/var/log/mysql
     ports:
       - ${MYSQL8_PORT}:3306
@@ -107,7 +107,7 @@ services:
       TZ: Asia/Shanghai
     volumes:
       - ${CONF_PATH}/mysql5.7/my.cnf:/etc/mysql/my.cnf
-      - ${STORAGE_PATH_PATH}/mysql5.7/data:/usr/local/app/mysql/data
+      - ${STORAGE_PATH}/mysql5.7/data:/usr/local/app/mysql/data
       - ${LOG_PATH}/mysql5.7:/var/log/mysql
     ports:
       - ${MYSQL_PORT}:3306
@@ -128,7 +128,7 @@ services:
     volumes:
       - ${CONF_PATH}/redis/redis.conf:/usr/local/app/redis/conf/redis.conf
       - ${LOG_PATH}/redis/:/usr/local/app/redis/logs
-      - ${STORAGE_PATH_PATH}/redis/:/usr/local/app/redis/data
+      - ${STORAGE_PATH}/redis/:/usr/local/app/redis/data
     ports:
       - ${REDIS_PORT}:6379
     networks:
@@ -169,7 +169,7 @@ services:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-guest}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS:-guest}
     volumes:
-      - ${STORAGE_PATH_PATH}/rabbitmq/data/:/var/lib/rabbitmq
+      - ${STORAGE_PATH}/rabbitmq/data/:/var/lib/rabbitmq
       - ${LOG_PATH}/rabbitmq/:/var/log/rabbitmq
       - ${CONF_PATH}/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
     ports:
@@ -189,7 +189,7 @@ services:
     container_name: jesse-mongodb-service
     restart: always
     volumes:
-      - ${STORAGE_PATH_PATH}/mongodb/data/:/usr/local/app/mongodb/data/
+      - ${STORAGE_PATH}/mongodb/data/:/usr/local/app/mongodb/data/
       - ${LOG_PATH}/mongodb/:/usr/local/app/mongodb/log
       - ${CONF_PATH}/mongodb/mongod.conf:/usr/local/app/mongodb/conf/mongod.conf
     ports:
@@ -213,7 +213,7 @@ services:
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD:-a123456}
       - xpack.security.enabled=true
     volumes:
-      - ${STORAGE_PATH_PATH}/elasticsearch/data/:/usr/local/app/elasticsearch/data
+      - ${STORAGE_PATH}/elasticsearch/data/:/usr/local/app/elasticsearch/data
       - ${LOG_PATH}/elasticsearch/:/usr/local/app/elasticsearch/logs
       - ${CONF_PATH}/elasticsearch/elasticsearch.yml:/usr/local/app/elasticsearch/config/elasticsearch.yml
       - ${CONF_PATH}/elasticsearch/jvm.options.d:/usr/local/app/elasticsearch/config/jvm.options.d
@@ -236,7 +236,7 @@ services:
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=${ELASTIC_PASSWORD:-a123456}
     volumes:
-      - ${STORAGE_PATH_PATH}/kibana/data/:/usr/local/app/kibana/data
+      - ${STORAGE_PATH}/kibana/data/:/usr/local/app/kibana/data
       - ${LOG_PATH}/kibana/:/usr/local/app/kibana/logs
       - ${CONF_PATH}/kibana/kibana.yml:/usr/local/app/kibana/config/kibana.yml
     ports:
@@ -259,7 +259,7 @@ services:
       - ${CONF_PATH}/logstash/config:/usr/local/app/logstash/config/
       - ${CONF_PATH}/logstash/pipeline:/usr/local/app/logstash/pipeline
       - ${LOG_PATH}/logstash/:/usr/local/app/logstash/log
-      - ${STORAGE_PATH_PATH}/logstash/:/usr/local/app/logstash/data
+      - ${STORAGE_PATH}/logstash/:/usr/local/app/logstash/data
     ports:
       - ${LOGSTASH_PORT}:5044
       - ${LOGSTASH_UI_PORT}:9600
@@ -335,7 +335,7 @@ services:
       - "8000:8000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${STORAGE_PATH_PATH}/portainer/data/:/data
+      - ${STORAGE_PATH}/portainer/data/:/data
     networks:
       - jesse-network
 

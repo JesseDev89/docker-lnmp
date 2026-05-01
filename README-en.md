@@ -101,7 +101,7 @@ docker compose ps
 #### MySQL 8.0
 - **Port**: 3306
 - **Default User**: root (no password)
-- **Data Storage**: `store/mysql/data/`
+- **Data Storage**: `storage/mysql/data/`
 - **Configuration**: `conf/mysql/my.cnf`
 
 **Change root password:**
@@ -119,7 +119,7 @@ FLUSH PRIVILEGES;
 
 #### MongoDB
 - **Port**: 27017
-- **Data Storage**: `store/mongodb/data/`
+- **Data Storage**: `storage/mongodb/data/`
 - **Configuration**: `conf/mongodb/mongod.conf`
 
 **Create admin account:**
@@ -144,7 +144,7 @@ db.auth("root", "a123456");
 
 #### Redis
 - **Port**: 6379
-- **Data Storage**: `store/redis/`
+- **Data Storage**: `storage/redis/`
 - **Configuration**: `conf/redis/redis.conf`
 
 ### Message Queue
@@ -153,7 +153,7 @@ db.auth("root", "a123456");
 - **Management UI**: http://localhost:15672
 - **AMQP Port**: 5672
 - **Default Credentials**: guest / guest
-- **Data Storage**: `store/rabbitmq/data/`
+- **Data Storage**: `storage/rabbitmq/data/`
 
 **Create admin user:**
 
@@ -167,7 +167,7 @@ docker exec -it jesse-rabbitmq-service rabbitmqctl set_user_tags admin administr
 
 #### Elasticsearch
 - **Port**: 9200
-- **Data Storage**: `store/elasticsearch/data/`
+- **Data Storage**: `storage/elasticsearch/data/`
 - **Configuration**: `conf/elasticsearch/elasticsearch.yml`
 - **Log Directory**: `log/elasticsearch/`
 
@@ -247,7 +247,7 @@ docker-lnmp/
 │   ├── project1/          # Project 1
 │   ├── project2/          # Project 2
 │   └── test.php           # Test file
-├── store/                  # Data persistence directory
+├── storage/                  # Data persistence directory
 │   ├── mysql/             # MySQL data
 │   ├── mongodb/           # MongoDB data
 │   ├── redis/             # Redis data
@@ -342,7 +342,7 @@ MYSQL_PORT=3307
 Ensure data directories have correct permissions:
 
 ```bash
-chmod -R 777 store/ log/
+chmod -R 777 storage/ log/
 ```
 
 ### 3. Missing PHP Extensions
@@ -359,7 +359,7 @@ chmod -R 777 store/ log/
 
 ```bash
 docker compose down -v
-rm -rf store/* log/*
+rm -rf storage/* log/*
 ```
 
 ---
@@ -369,7 +369,7 @@ rm -rf store/* log/*
 1. **Code Storage**: Place all project code in the `www/` directory
 2. **Domain Configuration**: Add local domain mappings in `/etc/hosts`
 3. **SSL Certificates**: Place certificate files in `conf/nginx/ssl/` directory
-4. **Data Backup**: Regularly backup important data in `store/` directory
+4. **Data Backup**: Regularly backup important data in `storage/` directory
 5. **Log Monitoring**: Use `docker compose logs -f` to view logs in real-time
 
 ---

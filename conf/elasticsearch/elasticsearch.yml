@@ -41,6 +41,8 @@ bootstrap.system_call_filter: false
 ## Enable encryption and mutual authentication between cluster nodes
 # 禁用机器学习功能（Alpine环境不支持）
 xpack.ml.enabled: false
+# 禁用机器学习的自动检测
+node.ml: false
 #xpack.license.self_generated.type: basic
 xpack.security.transport.ssl:
   enabled: true
